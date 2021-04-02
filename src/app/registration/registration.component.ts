@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RegistrationService } from '../services/registration.service';
 
 @Component({
     selector: 'app-registration',
@@ -11,9 +12,12 @@ export class RegistrationComponent implements OnInit {
 
     registrationForm: FormGroup;
     isSubmitted: boolean = false;
+    checkEmpId: Boolean = true;
+    showMsg: boolean = false;
 
     constructor(private formBuilder: FormBuilder,
-        private router: Router) {
+        private router: Router,
+        private registerService: RegistrationService) {
         this.registrationForm = this.formBuilder.group({
             firstName: new FormControl('', [
                 Validators.required,
@@ -25,11 +29,7 @@ export class RegistrationComponent implements OnInit {
                 Validators.minLength(3),
                 Validators.maxLength(30),
                 Validators.pattern('^[a-zA-Z ]*$')]),
-            employeeID: new FormControl('', [
-                Validators.required,
-                Validators.minLength(8),
-                Validators.maxLength(8),
-                Validators.pattern('^[a-zA-Z0-9]*$')]),
+            employeeID: new FormControl('', []),
             organizationName: new FormControl('', [
                 Validators.required,
                 Validators.minLength(8),
@@ -48,16 +48,47 @@ export class RegistrationComponent implements OnInit {
             ])
         });
     }
-    ngOnInit() {
 
+    async ngOnInit() {
+        this.registrationForm.patchValue({
+            employeeID: await this.getRandomString()
+        })
     }
 
-    onRegistrationFormSubmit() {
+    getRandomString() {
+        return new Promise(async (resolve, reject) => {
+            let length = 6;
+            let randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            while (this.checkEmpId) {
+                for (var i = 0; i < length; i++) {
+                    result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+                }
+                let response = await this.registerService.checkEmpId({ employeeId: `AG-${result}` })
+                // console.log("checkEmpId response :", response);
+                this.checkEmpId = response['status']
+            }
+            resolve(`AG-${result}`);
+        })
+    }
+
+    async onRegistrationFormSubmit() {
         this.isSubmitted = true;
         if (this.registrationForm.valid) {
-            console.log("User Registration Form Submit", this.registrationForm.value);
+            let user = {
+                firstName: this.registrationForm.value.firstName.toLowerCase(),
+                lastName: this.registrationForm.value.lastName.toLowerCase(),
+                email: this.registrationForm.value.email.toLowerCase(),
+                password: this.registrationForm.value.password,
+                employeeID: this.registrationForm.value.employeeID,
+                organizationName: this.registrationForm.value.organizationName.toLowerCase(),
+            }
+            let response = await this.registerService.registerUser(user)
+            // console.log("onRegistrationFormSubmit :", response);
+            if (response['status']) {
+                this.router.navigateByUrl('/login');
+            }
         }
-
     }
 
     btnClick = function () {
