@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,6 +23,7 @@ import { AlluserComponent } from './alluser/alluser.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

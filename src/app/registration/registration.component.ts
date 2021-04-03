@@ -14,6 +14,7 @@ export class RegistrationComponent implements OnInit {
     isSubmitted: boolean = false;
     checkEmpId: Boolean = true;
     showMsg: boolean = false;
+    emailExists: boolean = false;
 
     constructor(private formBuilder: FormBuilder,
         private router: Router,
@@ -88,6 +89,18 @@ export class RegistrationComponent implements OnInit {
             if (response['status']) {
                 this.router.navigateByUrl('/login');
             }
+        }
+    }
+
+    async checkEmail(event) {
+        let gotEmail = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/.test(this.registrationForm.value.email)
+        // console.log("data :", gotEmail);
+        if (gotEmail) {
+            let response = await this.registerService.checkEmailId({ email: this.registrationForm.value.email })
+            console.log("response :", response);
+            this.emailExists = response['status']
+            console.log(this.emailExists);
+
         }
     }
 

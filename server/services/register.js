@@ -38,3 +38,23 @@ module.exports.isEmpIdExist = async function (req, res) {
         return responseData(res, false, 500);
     }
 }
+
+module.exports.isEmaildExist = async function (req, res) {
+    try {
+        const db = getDb()
+        var codeExists = await db.collection('users')
+            .find({ email: req.body.email })
+            .count()
+        // console.log("codeExists : ", codeExists);
+        if (codeExists > 0) {
+            return responseData(res, true, 200, "success");
+        }
+        else {
+            return responseData(res, false, 200, "failure");
+        }
+    }
+    catch (err) {
+        console.log("error : ", error);
+        return responseData(res, false, 500);
+    }
+}

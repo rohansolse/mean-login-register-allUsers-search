@@ -5,14 +5,19 @@ import { CommonService } from './common.service';
     providedIn: 'root'
 })
 export class LoginService {
-
-
     constructor(private commonService: CommonService) { }
-
 
     loginUser(data) {
         return new Promise((resolve, reject) => {
             return this.commonService.getPostData("/login", data).subscribe(result => {
+                resolve(result);
+            })
+        })
+    }
+
+    getAllusers() {
+        return new Promise((resolve, reject) => {
+            return this.commonService.getData("/getusers",).subscribe(result => {
                 resolve(result);
             })
         })

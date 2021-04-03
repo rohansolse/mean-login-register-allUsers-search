@@ -23,4 +23,12 @@ export class RegistrationService {
             })
         })
     }
+
+    checkEmailId(data) {
+        return new Promise((resolve, reject) => {
+            return this.commonService.getPostData("/register/checkEmailId", data).subscribe(result => {
+                resolve(result)
+            })
+        })
+    }
 }
