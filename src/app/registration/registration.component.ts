@@ -78,10 +78,9 @@ export class RegistrationComponent implements OnInit {
 
     async onRegistrationFormSubmit() {
         this.isSubmitted = true;
-        console.log(this.registrationForm.valid);
-        console.log(this.registrationForm.value);
+        // console.log(this.registrationForm.valid);
+        // console.log(this.registrationForm.value);
         if (this.registrationForm.valid) {
-
             let user = {
                 firstName: this.registrationForm.value.firstName.toLowerCase(),
                 lastName: this.registrationForm.value.lastName.toLowerCase(),
@@ -103,7 +102,7 @@ export class RegistrationComponent implements OnInit {
         // console.log("data :", gotEmail);
         if (gotEmail) {
             let response = await this.registerService.checkEmailId({ email: this.registrationForm.value.email })
-            console.log("response :", response);
+            // console.log("response :", response);
             this.emailExists = response['status']
             // console.log(this.emailExists);
         }

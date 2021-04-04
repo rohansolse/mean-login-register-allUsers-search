@@ -17,7 +17,7 @@ module.exports.login = async function (req, res) {
                     return responseData(res, false, 200, "InValid Password")
                 }
                 else {
-                    console.log(euser);
+                    // console.log(euser);
                     let payload = { subject: euser._id }
                     let token = jwt.sign(payload, jwtSecretKey)
                     return responseData(res, true, 200, "user Found!", { token })

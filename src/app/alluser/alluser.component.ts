@@ -20,7 +20,7 @@ export class AlluserComponent implements OnInit {
 
     async ngOnInit() {
         let response = await this.loginService.getAllusers()
-        console.log(response);
+        // console.log(response);
         if (response['status']) {
             this.tabledata = response['data']
             this.tabledata.forEach(element => {
