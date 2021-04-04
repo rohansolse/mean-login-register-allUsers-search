@@ -7,6 +7,7 @@ module.exports.register = async function (req, res) {
     try {
         let user = req.body
         user.activate = true
+        user.createdDate = new Date()
         const db = getDb();
         db.collection('users')
             .insertOne(user)

@@ -14,6 +14,9 @@ import { LoginService } from './services/login.service';
 import { RegistrationService } from './services/registration.service';
 import { CommonService } from './services/common.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+    NgxPaginationModule,
   ],
   providers: [AuthGuard, LoginService, RegistrationService, CommonService, {
     provide: HTTP_INTERCEPTORS,

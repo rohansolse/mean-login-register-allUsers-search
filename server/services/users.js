@@ -6,7 +6,8 @@ module.exports.getAllUsers = async function (req, res) {
         const db = getDb()
         let tabledata = await db.collection('users')
             .aggregate([
-                { $project: { _id: 0, activate: 0, password: 0 } }
+                { $project: { _id: 0, activate: 0, password: 0 } },
+                { $sort: { createdDate: 1 } },
             ]).toArray();
         // console.log("getAllUsers :", tabledata);
         if (tabledata.length > 0) {

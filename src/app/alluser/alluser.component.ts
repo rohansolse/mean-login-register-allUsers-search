@@ -14,6 +14,7 @@ export class AlluserComponent implements OnInit {
     searchText: string = '';
     searchVal: any;
     filteredData: any = [];
+    p: number = 1;
     cols = [{ name: 'firstName' }, { name: 'lastName' }, { name: 'employeeID' }, { name: 'email' }, { name: 'organizationName' },]
 
     constructor(private router: Router, private commonService: CommonService, private loginService: LoginService) { }
@@ -47,6 +48,13 @@ export class AlluserComponent implements OnInit {
 
     btnClick() {
         this.commonService.loggedOut()
+    }
+
+    key = 'id'
+    reverse: Boolean = false;
+    sort(key) {
+        this.key = key;
+        this.reverse = !this.reverse
     }
 
 }
