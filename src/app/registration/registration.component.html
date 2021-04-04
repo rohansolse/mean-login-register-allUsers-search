@@ -72,10 +72,13 @@
                             <span style="color: red;">Please Enter Password.</span>
                         </small>
                         <small *ngIf="registrationForm.get('password').hasError('minlength')">
-                            <span style="color: red;">The password requied atleast 5 characters.</span>
+                            <span style="color: red;">The password requied atleast 8 characters.</span>
                         </small>
                         <small *ngIf="registrationForm.get('password').hasError('maxlength')">
-                            <span style="color: red;">The password requied only 12 characters.</span>
+                            <span style="color: red;">The password requied only 15 characters.</span>
+                        </small>
+                        <small *ngIf="registrationForm.get('password').hasError('pattern')">
+                            <span style="color: red;">The password requied At Least 1 upper, 1 lower, 1 digit, special and total 8 - 15 characters.</span>
                         </small>
                     </div>
                 </div>

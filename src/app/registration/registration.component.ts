@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonService } from '../services/common.service';
 import { RegistrationService } from '../services/registration.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class RegistrationComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
         private router: Router,
+        private commonService: CommonService,
         private registerService: RegistrationService) {
         this.registrationForm = this.formBuilder.group({
             firstName: new FormControl('', [
@@ -44,8 +46,9 @@ export class RegistrationComponent implements OnInit {
             ]),
             password: new FormControl('', [
                 Validators.required,
-                Validators.minLength(5),
-                Validators.maxLength(12)
+                Validators.minLength(8),
+                Validators.maxLength(15),
+                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$')
             ])
         });
     }
@@ -75,19 +78,22 @@ export class RegistrationComponent implements OnInit {
 
     async onRegistrationFormSubmit() {
         this.isSubmitted = true;
+        console.log(this.registrationForm.valid);
+        console.log(this.registrationForm.value);
         if (this.registrationForm.valid) {
+
             let user = {
                 firstName: this.registrationForm.value.firstName.toLowerCase(),
                 lastName: this.registrationForm.value.lastName.toLowerCase(),
                 email: this.registrationForm.value.email.toLowerCase(),
-                password: this.registrationForm.value.password,
+                password: await this.commonService.getIncrepted(this.registrationForm.value.password),
                 employeeID: this.registrationForm.value.employeeID,
                 organizationName: this.registrationForm.value.organizationName.toLowerCase(),
             }
             let response = await this.registerService.registerUser(user)
             // console.log("onRegistrationFormSubmit :", response);
             if (response['status']) {
-                this.router.navigateByUrl('/login');
+                this.router.navigate(['/login']);
             }
         }
     }
@@ -99,12 +105,11 @@ export class RegistrationComponent implements OnInit {
             let response = await this.registerService.checkEmailId({ email: this.registrationForm.value.email })
             console.log("response :", response);
             this.emailExists = response['status']
-            console.log(this.emailExists);
-
+            // console.log(this.emailExists);
         }
     }
 
     btnClick = function () {
-        this.router.navigateByUrl('/login');
+        this.router.navigate(['/login']);
     }
 }

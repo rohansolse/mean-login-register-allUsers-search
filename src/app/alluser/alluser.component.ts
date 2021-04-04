@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonService } from '../services/common.service';
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -15,11 +16,11 @@ export class AlluserComponent implements OnInit {
     filteredData: any = [];
     cols = [{ name: 'firstName' }, { name: 'lastName' }, { name: 'employeeID' }, { name: 'email' }, { name: 'organizationName' },]
 
-    constructor(private router: Router, private loginService: LoginService) { }
+    constructor(private router: Router, private commonService: CommonService, private loginService: LoginService) { }
 
     async ngOnInit() {
         let response = await this.loginService.getAllusers()
-        // console.log(response);
+        console.log(response);
         if (response['status']) {
             this.tabledata = response['data']
             this.tabledata.forEach(element => {
@@ -44,8 +45,8 @@ export class AlluserComponent implements OnInit {
         }
     }
 
-    btnClick = function () {
-        this.router.navigateByUrl('/login');
+    btnClick() {
+        this.commonService.loggedOut()
     }
 
 }

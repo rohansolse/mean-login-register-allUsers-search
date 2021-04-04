@@ -4,7 +4,10 @@ const { responseData } = require('../utils/responseHandler')
 module.exports.getAllUsers = async function (req, res) {
     try {
         const db = getDb()
-        let tabledata = await db.collection('users').find().toArray();
+        let tabledata = await db.collection('users')
+            .aggregate([
+                { $project: { _id: 0, activate: 0, password: 0 } }
+            ]).toArray();
         console.log("getAllUsers :", tabledata);
         if (tabledata.length > 0) {
             return responseData(res, true, 200, "success", tabledata);
