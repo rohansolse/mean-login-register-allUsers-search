@@ -45,10 +45,10 @@
             <div class="row">
                 <div class="col-sm-6 form-group">
                     <label>Email Address</label>
-                    <input type="text" placeholder="Enter Email Address" (keyup)="checkEmail($event)" formControlName="email" class="form-control" />
+                    <input type="text" placeholder="Enter Email ID" (keyup)="checkEmail($event)" formControlName="email" class="form-control" />
                     <div *ngIf="registrationForm.get('email').errors && isSubmitted">
                         <small *ngIf="registrationForm.get('email').hasError('required')">
-                            <span style="color: red;">Please Enter Email.</span>
+                            <span style="color: red;">Please Enter Email ID.</span>
                         </small>
                         <small *ngIf="registrationForm.get('email').hasError('minlength')">
                             <span style="color: red;">The email requied atleast 5 characters.</span>
@@ -78,7 +78,7 @@
                             <span style="color: red;">The password requied only 15 characters.</span>
                         </small> -->
                         <small *ngIf="registrationForm.get('password').hasError('pattern')">
-                            <span style="color: red;">The password requied At Least 1 upper, 1 lower, 1 digit, special and total 8 - 15 characters.</span>
+                            <span style="color: red;">The password requied Atleast 1 uppercase, 1 lowercase, 1 numeric, 1 special character and length should be of 8 - 15 characters</span>
                         </small>
                     </div>
                 </div>
@@ -104,26 +104,26 @@
                 </div>
                 <div class="col-sm-6 form-group">
                     <label>Organization Name</label>
-                    <input type="text" placeholder="Enter Phone Number " formControlName="organizationName" class="form-control" />
+                    <input type="text" placeholder="Enter Organization Name" formControlName="organizationName" class="form-control" />
                     <div *ngIf="registrationForm.get('organizationName').errors && isSubmitted">
                         <small *ngIf="registrationForm.get('organizationName').hasError('required')">
                             <span style="color: red;">Please Enter Organization Name.</span>
                         </small>
                         <small *ngIf="registrationForm.get('organizationName').hasError('minlength')">
-                            <span style="color: red;">Organization Name requied atleast 8 characters.</span>
+                            <span style="color: red;">Organization Name requied atleast 3 characters.</span>
                         </small>
                         <small *ngIf="registrationForm.get('organizationName').hasError('maxlength')">
                             <span style="color: red;">Organization Name requied only 50 characters.</span>
                         </small>
                         <small *ngIf="registrationForm.get('organizationName').hasError('pattern')">
-                            <span style="color: red;">Only characters & Numbers are allowed.</span>
+                            <span style="color: red;">Only characters are allowed.</span>
                         </small>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" [disabled]="!registrationForm.valid && emailExists" class="btn btn-success">Submit</button>
-                <button type="button" style="float: right;" (click)="btnClick()" class="btn btn-info">Already Registered!</button>
+                <button type="button" (click)="btnClick()" class="btn btn-info">Already Registered!</button>
+                <button type="submit" style="float: right;" [disabled]="!registrationForm.valid && emailExists" class="btn btn-success">Register</button>
             </div>
         </div>
     </form>

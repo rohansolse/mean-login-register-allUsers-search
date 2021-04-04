@@ -11,6 +11,7 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
+                <th>Sr. No.</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Employee ID</th>
@@ -19,12 +20,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let row of tabledata">
-                <td>{{row.firstName}}</td>
-                <td>{{row.lastName}}</td>
+            <tr *ngFor="let row of tabledata; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{row.firstName | titlecase}}</td>
+                <td>{{row.lastName | titlecase}}</td>
                 <td>{{row.employeeID}}</td>
                 <td>{{row.email}}</td>
-                <td>{{row.organizationName}}</td>
+                <td>{{row.organizationName | titlecase}}</td>
             </tr>
             <tr>
         </tbody>

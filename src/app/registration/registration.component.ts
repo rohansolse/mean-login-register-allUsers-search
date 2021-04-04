@@ -35,9 +35,9 @@ export class RegistrationComponent implements OnInit {
             employeeID: new FormControl('', []),
             organizationName: new FormControl('', [
                 Validators.required,
-                Validators.minLength(8),
+                Validators.minLength(3),
                 Validators.maxLength(50),
-                Validators.pattern('^[a-zA-Z0-9]*$')]),
+                Validators.pattern('^[a-zA-Z ]*$')]),
             email: new FormControl('', [
                 Validators.required,
                 Validators.minLength(5),

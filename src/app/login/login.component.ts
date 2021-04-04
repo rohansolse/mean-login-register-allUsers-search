@@ -11,7 +11,8 @@ import { LoginService } from '../services/login.service';
 })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
-    errorMsg: any = null
+    errorMsg: any = null;
+    isSubmitted: boolean = false;
     constructor(private router: Router,
         private commonService: CommonService,
         private loginService: LoginService) {
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
     }
 
     async onSubmit() {
+        this.isSubmitted = true;
         if (this.loginForm.valid) {
             // console.log("data :", this.loginForm.value);
             let user = {
