@@ -9,10 +9,10 @@ const { getAllUsers } = require('../services/users')
 
 router.get('/', (req, res) => { res.send("Hello from api route....!!") })
 
+router.post('/login', login)
 router.post('/register', register)
 router.post('/register/checkEmpId', isEmpIdExist)
 router.post('/register/checkEmailId', isEmaildExist)
-router.post('/login', login)
 router.get('/getusers', verifyToken, getAllUsers)
 
 function verifyToken(req, res, next) {
